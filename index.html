@@ -18,6 +18,8 @@
             --alert-glow: rgba(255, 69, 69, 0.25);
             --admin-green: #2ecc71;
             --admin-glow: rgba(46, 204, 113, 0.35);
+            --gold-color: #f1c40f;
+            --gold-glow: rgba(241, 196, 15, 0.35);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
@@ -235,6 +237,7 @@
         }
         .close-popup-x { position: absolute; top: 18px; right: 20px; background: transparent; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; font-weight: 300; transition: color 0.2s; line-height: 1; }
         .close-popup-x:hover { color: var(--alert-red); }
+        .modal-content.alert-mode { background: rgba(26, 15, 18, 0.9); border-color: rgba(255, 69, 69, 0.35); box-shadow: 0 15px 40px rgba(255, 69, 69, 0.15); }
         
         .btn-modal-action { 
             flex: 1; 
@@ -268,8 +271,8 @@
         /* Misi Penambahan Limit */
         .task-list { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
         .task-item { display: flex; justify-content: space-between; align-items: center; background: rgba(11, 12, 16, 0.7); padding: 14px 18px; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.03); text-align: left; }
-        .task-info h5 { font-size: 13.5px; color: #fff; font-weight: 600; }
-        .task-info p { font-size: 11px; color: var(--accent-color); font-weight: 600; margin-top: 2px; }
+        .task-item h5 { font-size: 13.5px; color: #fff; font-weight: 600; }
+        .task-item p { font-size: 11px; color: var(--accent-color); font-weight: 600; margin-top: 2px; }
         
         .btn-task-go { 
             background: linear-gradient(135deg, #45f3ff, #00b4db); 
@@ -289,7 +292,7 @@
         }
         .btn-task-go:disabled { background: #222 !important; color: #555 !important; cursor: not-allowed; border: 1px solid #333; box-shadow: none; }
         
-        /* Kartu Penawaran Premium */
+        /* Kartu Penawaran Premium Berkilau */
         .premium-offer-card { background: linear-gradient(135deg, rgba(31, 40, 51, 0.6), rgba(15, 20, 28, 0.8)); border: 1px solid rgba(255, 69, 243, 0.4); padding: 22px; border-radius: 16px; margin-top: 20px; text-align: center; box-shadow: 0 0 25px rgba(255, 69, 243, 0.12); }
         .premium-offer-card h4 { color: var(--premium-pink); font-size: 14px; margin-bottom: 2px; font-weight: 700; letter-spacing: 1px; text-shadow: 0 0 8px rgba(255, 69, 243, 0.3); }
         .premium-offer-card .price { font-size: 26px; font-weight: 800; color: #fff; margin: 8px 0; letter-spacing: 0.5px; }
@@ -308,11 +311,31 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
             margin-top: 8px; 
             letter-spacing: 0.5px; 
-            box-shadow: 0 4px 15px rgba(255, 69, 243, 0.25); 
+            box-shadow: 0 4px 15px rgba(69, 243, 255, 0.25); 
         }
         .btn-buy-premium-direct:hover { 
             transform: translateY(-2px); 
             box-shadow: 0 6px 22px rgba(255, 69, 243, 0.4); 
+        }
+
+        .btn-submit-ss-proof {
+            background: linear-gradient(135deg, var(--gold-color), #f39c12);
+            color: #0b0c10;
+            font-weight: 800;
+            border: none;
+            padding: 12px 20px;
+            width: 100%;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 13px;
+            margin-top: 15px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px var(--gold-glow);
+            transition: all 0.3s ease;
+        }
+        .btn-submit-ss-proof:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(241, 196, 15, 0.5);
         }
 
         /* CUSTOMER SERVICE LAYOUT VIEW FULL SCREEN */
@@ -532,9 +555,9 @@
     <div class="cs-header">
         <div style="display:flex; align-items:center; gap:10px;">
             <span style="font-size: 20px;"></span>
-            <span>🛠CUSTOMER SERVICE</span>
+            <span>🛠️ INO CUSTOMER SERVICE</span>
         </div>
-        <button class="floating-btn" style="padding: 8px 18px; font-size: 13px;" onclick="exitChatWindow()">↩️ Kembali</button>
+        <button class="floating-btn" style="padding: 8px 18px; font-size: 13px;" onclick="exitChatWindow()">↩️ Back to Extractor</button>
     </div>
     <div class="cs-body" id="chat-conversation-area">
         <div class="cs-msg system">👋 Halo Kak! Selamat datang di layanan Customer Service resmi INO.DIGITAL Ada kendala teknis operasional atau pertanyaan seputar website? Tulis keluhan Anda di bawah ini, admin akan merespon secepatnya.</div>
@@ -556,7 +579,8 @@
 
 <main class="admin-fullscreen-view" id="admin-view-container" onclick="event.stopPropagation()">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; padding-bottom:15px; border-bottom:1px solid #30363d;">
-        <h2 style="color: var(--admin-green); font-size: 19px; font-weight: 600; letter-spacing: 0.5px;">⚡ INO CONTROL  </h2> <button class="floating-btn" style="border-color:var(--admin-green); color:var(--admin-green);" onclick="exitAdminMode()">↩️ Exit Dashboard</button>
+        <h2 style="color: var(--admin-green); font-size: 19px; font-weight: 600; letter-spacing: 0.5px;">⚡ INO CONTROL PANEL CENTRALIZED</h2>
+        <button class="floating-btn" style="border-color:var(--admin-green); color:var(--admin-green);" onclick="exitAdminMode()">↩️ Exit Dashboard</button>
     </div>
     
     <div class="admin-grid-cards">
@@ -576,6 +600,12 @@
         <button class="btn-admin-action" onclick="publishAdminBroadcast()">Sebar Broadcast Ke User</button>
     </div>
     
+    <div class="admin-panel-section">
+        <h4>🔑 GENERATOR GENERATE STOCK VOUCHER (MURNI ACAK)</h4>
+        <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">Gunakan tombol di bawah untuk membuat stock voucher tanpa batas yang dijamin tembus sistem.</p>
+        <button class="btn-admin-action" style="background:var(--gold-color); box-shadow:0 4px 12px var(--gold-glow);" onclick="generateStockVouchersToClipboard()">⚡ Ambil 800 Voucher Acak Ke Clipboard</button>
+    </div>
+
     <div class="admin-panel-section">
         <h4>🏆 PENGGUNA TERAKTIF (RANGKING 1-10)</h4>
         <table class="admin-table">
@@ -1068,6 +1098,8 @@
                 </div>
             </div>
 
+            <button class="btn-submit-ss-proof" onclick="redirectToAdminForSSVerification()">📸 Kirim Bukti SS Gabung Grup (Klaim +8 Limit)</button>
+
             <div class="premium-offer-card">
                 <h4>✨ MALES GABUNG MISI? AMBIL PREMIUM ✨</h4>
                 <div class="price">Rp 35.000 <span>/ 40 Hari Aktif</span></div>
@@ -1080,6 +1112,7 @@
 
     function executeDirectInstantTask(taskKey, url) {
         window.open(url, '_blank');
+        
         let allowed = parseInt(localStorage.getItem('total_allowed_quota') || '2');
         allowed += 2;
         localStorage.setItem('total_allowed_quota', allowed.toString());
@@ -1093,9 +1126,14 @@
         showSocialTasksModal();
     }
 
+    function redirectToAdminForSSVerification() {
+        const messageText = encodeURIComponent("Halo Admin Ino.digital, saya sudah menyelesaikan tugas media sosial dan ingin menyetor bukti screenshot untuk aktivasi penambahan total +8 limit perangkat.\nToken ID Perangkat saya: " + deviceRefCode);
+        window.open("https://t.me/manajerIno?text=" + messageText, '_blank');
+    }
+
     function redirectToPremiumPurchaseTelegram() {
         const buyText = encodeURIComponent("Halo Admin Ino.digital, saya ingin melakukan aktivasi paket Premium Unlimited 40 Hari.\nRef Token Device saya: " + deviceRefCode);
-        window.open("https://t.me/inodigitalprompt?text=" + buyText, '_blank');
+        window.open("https://t.me/manajerIno?text=" + buyText, '_blank');
     }
 
     function openApkModal() {
@@ -1124,29 +1162,6 @@
             <button class="btn-buy-premium-direct" style="background:var(--alert-red); box-shadow:none; font-size:14px; color:#fff;" onclick="closeModal()">Coba Lagi</button>
         `;
         document.getElementById('central-modal').classList.add('active');
-    }
-
-    function activateVoucher() {
-        const code = document.getElementById('voucher-input').value.trim().toUpperCase();
-        if(!code) return;
-
-        const claimed = JSON.parse(localStorage.getItem('claimed_task_vouchers') || '[]');
-        if(claimed.includes(code)) {
-            showVoucherAlert("Voucher Hangus!", "Kode voucher premium ini sudah pernah diklaim sebelumnya di perangkat ini.");
-            return;
-        }
-
-        if(code.startsWith("INO-KING-") && code.length === 13) {
-            localStorage.setItem('premium_until', (new Date().getTime() + (40 * 24 * 60 * 60 * 1000)).toString());
-            claimed.push(code);
-            localStorage.setItem('claimed_task_vouchers', JSON.stringify(claimed));
-            alert("Sukses! Akses Premium 40 Hari Tanpa Batas Diaktifkan.");
-            updateQuotaDisplay();
-            document.getElementById('voucher-input').value = "";
-        } else {
-            showVoucherAlert("Voucher Tidak Valid!", "Kode voucher salah atau kadaluarsa.");
-        }
-        document.getElementById('voucher-panel').classList.remove('active');
     }
 
     function showInfoModal(title, text) {
@@ -1221,6 +1236,53 @@
             } else { alert(data.error || "Gagal memproses gambar."); }
         } catch (error) { alert("Koneksi bermasalah."); }
         finally { loader.style.display = 'none'; btn.disabled = false; }
+    }
+
+    function publishAdminBroadcast() {
+        const text = document.getElementById('admin-broadcast-input').value.trim();
+        if(!text) { alert("Teks broadcast pengumuman tidak boleh kosong!"); return; }
+        localStorage.setItem('global_broadcast_message_db', text);
+        alert("Sukses! Broadcast pengumuman global diperbarui.");
+        document.getElementById('admin-broadcast-input').value = "";
+    }
+
+    // --- DI SINI LETAK INTEGRASI AMAN LOGIKA 800 VOUCHER DAN SHUFFLE CLIPBOARD ---
+    function generateStockVouchersToClipboard() {
+        let textResult = "=== DAFTAR 800 STOCK VOUCHER PREMIUM INO.DIGITAL ===\n\n";
+        for(let i = 1000; i <= 1799; i++) {
+            textResult += `INO-KING-${i}\n`;
+        }
+        navigator.clipboard.writeText(textResult).then(() => {
+            alert("BOOM! Sukses Besar. Seluruh 800 data Voucher Premium Acak (INO-KING-1000 s/d INO-KING-1799) berhasil disalin ke Clipboard Bos. Tinggal paste di Notepad!");
+        }).catch(() => {
+            alert("Gagal menyalin otomatis, pastikan browser memberi izin akses clipboard.");
+        });
+    }
+
+    function activateVoucher() {
+        const code = document.getElementById('voucher-input').value.trim().toUpperCase();
+        if(!code) return;
+
+        const claimed = JSON.parse(localStorage.getItem('claimed_task_vouchers') || '[]');
+        if(claimed.includes(code)) {
+            showVoucherAlert("Voucher Hangus!", "Kode voucher premium ini sudah pernah diklaim sebelumnya di perangkat ini.");
+            return;
+        }
+
+        // Pembatasan matematis rentang pas 800 slot voucher aktif (1000 - 1799)
+        const matchVoucher800Slot = code.match(/^INO-KING-(1[0-7]\d{2})$/);
+
+        if (matchVoucher800Slot) {
+            localStorage.setItem('premium_until', (new Date().getTime() + (40 * 24 * 60 * 60 * 1000)).toString());
+            claimed.push(code);
+            localStorage.setItem('claimed_task_vouchers', JSON.stringify(claimed));
+            alert("Sukses! Akses Premium 40 Hari Tanpa Batas Diaktifkan.");
+            updateQuotaDisplay();
+            document.getElementById('voucher-input').value = "";
+        } else {
+            showVoucherAlert("Voucher Tidak Valid!", "Kode voucher salah atau kadaluarsa.");
+        }
+        document.getElementById('voucher-panel').classList.remove('active');
     }
 </script>
 </body>

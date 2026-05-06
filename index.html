@@ -783,36 +783,53 @@
         }
     }
 
-    // --- CRITICAL PERBAIKAN: INTERSEPSI KENDALA API DIUBAH MENJADI POP-UP NEON GLOWING "AI SEDANG SINKRONISASI" ---
-    async function generatePrompt() {
+        async function generatePrompt() {
         if (updateQuotaDisplay() <= 0) { showSocialTasksModal(); return; }
-        document.getElementById('loader').style.display = 'block'; document.getElementById('result-box').style.display = 'none';
+        
+        // 1. AMBIL ELEMEN GAMBAR YANG DI-UPLOAD USER (Sesuaikan id 'uploaded-image' dengan milik Bos)
+        const imgElement = document.getElementById('preview-image') || document.getElementById('uploaded-image');
+        if (!imgElement || !imgElement.src || imgElement.src.startsWith('data:image') === false) {
+            alert("Masukkan fotonya dulu, Bos!");
+            return;
+        }
+        
+        // Ambil data base64 murni tanpa header data:image/jpeg;base64,
+        const base64Image = imgElement.src.split(',')[1];
+
+        // Tampilkan loader bawaan web kamu, Bos
+        document.getElementById('loader').style.display = 'block'; 
+        document.getElementById('result-box').style.display = 'none';
+
         try {
-                                    // 🚀 JALUR SUDAH DIKUNCI MATI KE DOMAIN BARU KAMU, BOS!
+            // 🚀 JALUR SUDAH DIKUNCI MATI KE DOMAIN BARU KAMU TANPA TYPO
             const res = await fetch('https://inodigitalpromptai.vercel.app/api/analyze', { 
                 method: "POST", 
                 headers: { "Content-Type": "application/json" }, 
                 body: JSON.stringify({ image: base64Image }) 
             });
+            
             const data = await res.json();
     
-            if (res.ok) { 
+            if (res.ok && data.text) { 
+                // JALUR SUKSES: Masukkan teks hasil prompt ke kotak output, tampilkan result box
                 document.getElementById('prompt-output').innerText = data.text; 
                 document.getElementById('result-box').style.display = 'block'; 
                 localStorage.setItem('used_count', (parseInt(localStorage.getItem('used_count') || '0') + 1).toString()); 
                 updateQuotaDisplay(); 
             } 
             else { 
-                // Ganti error respon mentah internal server menjadi pop-up estetik
-                showVoucherAlert("AI Sedang Sinkronisasi", "Sistem AI Gemini sedang memetakan struktur wajah referensi Anda, Bos. Jalur lalu lintas request sedang padat, silakan coba beberapa saat lagi.", false);
+                // Jika server Vercel merespon eror (Tampilkan pesan eror aslinya di pop-up biar ketahuan)
+                showVoucherAlert("Sinkronisasi Gagal", "Eror Server: " + (data.error || "Gagal memproses gambar"), false);
             }
         } catch (e) { 
-            // Ganti error catch kegagalan koneksi jaringan menjadi pop-up estetik pesanan Bos
-            showVoucherAlert("AI Sedang Sinkronisasi", "Sistem AI Gemini sedang memetakan struktur wajah referensi Anda, Bos. Jalur lalu lintas request sedang padat, silakan coba beberapa saat lagi.", false);
+            // Jika koneksi internet putus atau domain salah
+            showVoucherAlert("Koneksi Bermasalah", "Gagal terhubung ke server Vercel, Bos. Cek jaringan atau Logs Vercel.", false);
         } finally { 
+            // Matikan loader setelah proses selesai
             document.getElementById('loader').style.display = 'none'; 
         }
     }
+    
 
     function publishAdminBroadcast() { const text = document.getElementById('admin-broadcast-input').value.trim(); if(!text) return; localStorage.setItem('global_broadcast_message_db', text); alert("Broadcast updated!"); document.getElementById('admin-broadcast-input').value = ""; }
 </script>

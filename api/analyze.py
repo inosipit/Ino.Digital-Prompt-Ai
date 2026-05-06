@@ -1,7 +1,6 @@
 import os
 import json
 import urllib.request
-import urllib.parse
 
 def handler(request):
     # Hanya menerima metode POST kiriman foto dari frontend
@@ -13,21 +12,33 @@ def handler(request):
         }
 
     try:
-        # Membaca body request foto base64
-        req_body = json.loads(request.body.decode('utf-8'))
+        # --- PERBAIKAN UTAMA: CARA AMAN MEMBACA BODY JSON DI VERCEL PYTHON ---
+        # Kita pakai request.json jika tersedia, jika tidak baru fallback ke request.get_json()
+        if hasattr(request, 'json') and request.json:
+            req_body = request.json
+        else:
+            req_body = json.loads(request.get_data(as_text=True))
+            
         image_base64 = req_body.get("image", "")
         
-        # Mengambil API Key rahasia dari Settings Vercel
+        # Mengambil API Key rahasia dari Settings Environment Variables Vercel Bos
         api_key = os.environ.get("GEMINI_API_KEY")
         
         if not api_key:
             return {
                 'statusCode': 500,
                 'headers': {'Content-Type': 'application/json'},
-                'body': json.dumps({'error': 'API Key Gemini belum diisi di Environment Variables Vercel Bos!'})
+                'body': json.dumps({'error': 'Aman rahasia: API Key Gemini belum diisi di Environment Variables Vercel Bos!'})
             }
 
-        # Setup URL Google Gemini API 1.5 Flash (Sangat Cepat & Akurat)
+        if not image_base64:
+            return {
+                'statusCode': 400,
+                'headers': {'Content-Type': 'application/json'},
+                'body': json.dumps({'error': 'Mana foto referensinya, Bos? Gak kebaca oleh server.'})
+            }
+
+        # Jalur Google Gemini API 1.5 Flash (Sangat Cepat & Akurat)
         url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
         
         instruksi_analisis = (
@@ -67,7 +78,7 @@ def handler(request):
             }
         }
 
-        # Hantam data ke server Google API
+        # Tembak payload data ke server Google API
         req = urllib.request.Request(
             url,
             data=json.dumps(gemini_payload).encode('utf-8'),
@@ -79,11 +90,14 @@ def handler(request):
             res_data = json.loads(response.read().decode('utf-8'))
             extracted_text = res_data['candidates'][0]['content']['parts'][0]['text']
             
+            # Kembalikan respon sukses dengan header CORS lengkap agar index.html girang
             return {
                 'statusCode': 200,
                 'headers': {
                     'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Headers': 'Content-Type',
+                    'Access-Control-Allow-Methods': 'POST, OPTIONS'
                 },
                 'body': json.dumps({'text': extracted_text})
             }
@@ -92,5 +106,5 @@ def handler(request):
         return {
             'statusCode': 500,
             'headers': {'Content-Type': 'application/json'},
-            'body': json.dumps({'error': f'Sistem Crash: {str(e)}'})
+            'body': json.dumps({'error': f'Sistem Crash Internal: {str(e)}'})
         }

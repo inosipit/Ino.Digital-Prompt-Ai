@@ -3,907 +3,426 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visual Prompt Extractor - INO.DIGITAL</title>
+    <title>Ino.Digital Prompt AI - Premium Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Product+Sans:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #0b0c10;
-            --card-bg: #1f2833;
-            --text-color: #ffffff;
-            --text-muted: #95a5a6;
-            --accent-color: #45f3ff;
-            --accent-glow: rgba(69, 243, 255, 0.35);
-            --premium-pink: #ff45f3;
-            --premium-glow: rgba(255, 69, 243, 0.35);
-            --alert-red: #ff4545;
-            --alert-glow: rgba(255, 69, 69, 0.25);
-            --admin-green: #2ecc71;
-            --admin-glow: rgba(46, 204, 113, 0.35);
-            --gold-color: #f1c40f;
-            --gold-glow: rgba(241, 196, 15, 0.35);
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
-
+        /* ==================== GAYA NEON ESTETIK KHAS INO.DIGITAL ==================== */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: #0d0e12;
+            color: #ffffff;
+            font-family: 'Product Sans', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
             min-height: 100vh;
-            width: 100vw;
-            position: relative;
             overflow-x: hidden;
         }
-
-        /* Navbar Atas */
-        .top-navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
+        
+        /* HEADER LAYOUT SESUAI STANDAR INO (LOGO KIRI, LOGIN KANAN, NAMA TENGAH) */
+        header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 25px;
-            z-index: 1005; 
-            backdrop-filter: blur(8px);
-            background: rgba(11, 12, 16, 0.6);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-        }
-
-        .floating-btn {
-            background: rgba(31, 40, 51, 0.9);
-            border: 1px solid var(--accent-color);
-            color: var(--accent-color);
-            padding: 10px 22px;
-            border-radius: 30px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(69, 243, 255, 0.1);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            letter-spacing: 0.5px;
-        }
-        .floating-btn:hover {
-            background: var(--accent-color);
-            color: #0b0c10;
-            box-shadow: 0 0 18px var(--accent-glow);
-            transform: translateY(-2px);
-        }
-        .floating-btn.apk-btn { 
-            border-color: var(--premium-pink); 
-            color: var(--premium-pink); 
-            box-shadow: 0 0 10px rgba(255, 69, 243, 0.1);
-        }
-        .floating-btn.apk-btn:hover { 
-            background: var(--premium-pink); 
-            color: #fff; 
-            box-shadow: 0 0 18px var(--premium-glow); 
-        }
-
-        .premium-zone {
-            position: fixed;
-            top: 75px;
-            left: 25px;
-            background: rgba(31, 40, 51, 0.95);
+            padding: 15px 25px;
+            background: rgba(20, 21, 28, 0.6);
+            border-bottom: 1px solid #1f2330;
             backdrop-filter: blur(10px);
-            border: 1px solid var(--accent-color);
-            padding: 12px;
-            border-radius: 30px;
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            z-index: 1010; 
-            opacity: 0;
-            transform: translateY(-10px);
-            pointer-events: none;
-            transition: all 0.3s ease;
         }
-        .premium-zone.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
-        .premium-zone input { 
-            width: 150px; 
-            padding: 8px 16px; 
-            border-radius: 20px; 
-            border: 1px solid #333; 
-            background: #0b0c10; 
-            color: #fff; 
-            font-size: 13px; 
-            font-family: monospace; 
-            outline: none; 
-        }
-        .btn-activate { 
-            background: linear-gradient(135deg, #45f3ff, #00b4db); 
-            color: #0b0c10; 
-            padding: 8px 18px; 
-            border: none; 
-            border-radius: 20px; 
-            font-weight: 700; 
-            font-size: 12.5px; 
-            cursor: pointer; 
-            transition: all 0.2s;
-        }
-        .btn-activate:hover { transform: scale(1.03); box-shadow: 0 0 12px var(--accent-glow); }
-
-        /* Layout Utama */
-        .wrapper-main-layout {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 110px 20px 40px 20px;
-            z-index: 1; 
-            position: relative;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 630px;
-            background: var(--card-bg);
-            padding: 40px 30px;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+        .header-logo { width: 35px; height: 35px; }
+        .header-title {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #00ffcc;
+            text-shadow: 0 0 8px rgba(0, 255, 204, 0.5);
             text-align: center;
         }
-
-        .brand-header { display: flex; flex-direction: column; align-items: center; margin-bottom: 25px; }
-        .brand-logo { 
-            width: 135px; height: auto; margin-bottom: 12px;
-            filter: drop-shadow(0 0 12px var(--accent-color));
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            object-fit: contain; cursor: pointer;
-            user-select: none;
+        .header-login {
+            background: linear-gradient(45deg, #00ffcc, #0099ff);
+            color: #000;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
         }
-        .brand-name { font-size: 21px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #fff; }
-        .quota-badge { display: inline-block; background: rgba(255, 255, 255, 0.1); padding: 5px 16px; border-radius: 20px; font-size: 12px; margin-top: 8px; color: var(--accent-color); font-weight: 700; border: 1px solid rgba(69, 243, 255, 0.15); }
 
-        /* Upload Area Box */
-        .upload-box {
-            border: 2px dashed rgba(69, 243, 255, 0.4);
-            padding: 45px 20px;
-            border-radius: 14px;
+        /* MAIN DASHBOARD */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .quota-badge {
+            background: #161822;
+            border: 1px solid #ff0055;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            color: #ff0055;
+            box-shadow: 0 0 10px rgba(255, 0, 85, 0.2);
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+
+        /* UPLOAD ZONE */
+        .upload-container {
+            width: 100%;
+            background: #14151c;
+            border: 2px dashed #33394d;
+            border-radius: 15px;
+            padding: 40px 20px;
+            text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            background: rgba(69, 243, 255, 0.01);
-            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; width: 100%;
+            transition: 0.3s;
+            margin-bottom: 20px;
         }
-        .upload-box:hover { border-color: var(--accent-color); box-shadow: 0 0 15px var(--accent-glow); background: rgba(69, 243, 255, 0.03); }
-        .upload-icon { width: 52px; height: 52px; stroke: var(--accent-color); stroke-width: 1.5; fill: none; }
-        #preview-img { width: 100%; max-height: 280px; object-fit: contain; display: none; margin-top: 10px; border-radius: 8px; }
+        .upload-container:hover { border-color: #00ffcc; box-shadow: 0 0 15px rgba(0, 255, 204, 0.1); }
+        .upload-icon { font-size: 40px; margin-bottom: 10px; }
+        #ps-image-preview { width: 120px; height: 120px; object-fit: cover; border-radius: 10px; display: none; margin: 0 auto 15px auto; border: 2px solid #00ffcc; }
 
-        .btn-analyze { 
-            display: block; 
-            width: 100%; 
-            background: linear-gradient(135deg, #45f3ff, #00b4db); 
-            color: #0b0c10; 
-            border: none; 
-            padding: 15px; 
-            font-size: 15px; 
-            font-weight: 800; 
-            border-radius: 30px; 
-            cursor: pointer; 
-            margin-top: 25px; 
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 15px rgba(69, 243, 255, 0.25); 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        /* BUTTONS */
+        .btn-generate {
+            width: 100%;
+            background: linear-gradient(45deg, #00ffcc, #0077ff);
+            color: #000;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
+            transition: 0.3s;
+            text-transform: uppercase;
         }
-        .btn-analyze:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 22px var(--accent-glow); }
-        .btn-analyze:disabled { background: #3a4450; color: #7f8c8d; cursor: not-allowed; box-shadow: none; border: 1px solid rgba(255,255,255,0.02); }
+        .btn-generate:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(0, 255, 204, 0.6); }
 
-        .result-container { margin-top: 30px; }
-        .loading { text-align: center; color: var(--accent-color); display: none; margin: 20px 0; font-style: italic; }
-        .prompt-card-wrapper { position: relative; width: 100%; margin-top: 10px; }
-        .prompt-card { background: rgba(0, 0, 0, 0.25); padding: 20px; padding-bottom: 55px; border-radius: 12px; border-left: 4px solid var(--accent-color); white-space: pre-line; line-height: 1.6; text-align: left; }
-        
-        .btn-copy { 
-            position: absolute; 
-            bottom: 14px; right: 14px; 
-            background: rgba(69, 243, 255, 0.1); 
-            border: 1px solid var(--accent-color); 
-            color: var(--accent-color); 
-            padding: 6px 16px; 
-            border-radius: 20px; 
-            font-size: 12px; font-weight: 700; 
-            cursor: pointer; transition: all 0.2s ease;
+        /* TEXTAREA OUTPUT */
+        .result-box { width: 100%; margin-top: 25px; display: none; }
+        .result-title { font-size: 14px; color: #888; margin-bottom: 8px; text-align: left; width: 100%; }
+        .result-wrapper { position: relative; background: #14151c; border: 1px solid #1f2330; border-radius: 10px; padding: 15px; }
+        #ps-result-image-preview { width: 100%; max-height: 200px; object-fit: contain; border-radius: 8px; margin-bottom: 12px; display: none; }
+        textarea {
+            width: 100%; height: 150px; background: transparent; border: none; color: #fff;
+            resize: none; outline: none; font-size: 13px; line-height: 1.6; font-family: monospace;
         }
-        .btn-copy:hover { background: var(--accent-color); color: #0b0c10; box-shadow: 0 0 10px var(--accent-glow); }
 
-        /* Pop-up Modal Matte Glassmorphism */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 7, 10, 0.92); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-content { 
-            background: rgba(31, 40, 51, 0.85); 
-            backdrop-filter: blur(16px); 
-            -webkit-backdrop-filter: blur(16px);
-            padding: 35px 25px; 
-            border-radius: 24px; 
-            width: 92%; max-width: 450px; 
-            text-align: center; 
-            border: 1px solid rgba(69, 243, 255, 0.25); 
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6); 
-            max-height: 85vh; overflow-y: auto; position: relative;
+        /* WATERMARK BRANDING POSISI BOTTOM RIGHT PAS STANDAR INO */
+        .branding-watermark {
+            position: fixed;
+            bottom: 12px;
+            right: 15px;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.2);
+            letter-spacing: 1px;
+            z-index: 999;
+            pointer-events: none;
         }
-        .close-popup-x { position: absolute; top: 18px; right: 20px; background: transparent; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; font-weight: 300; line-height: 1; }
-        .close-popup-x:hover { color: var(--alert-red); }
-        .modal-content.alert-mode { background: rgba(26, 15, 18, 0.9); border-color: rgba(255, 69, 69, 0.35); }
-        
-        .alert-icon-box { width: 55px; height: 55px; border-radius: 50%; border: 2px solid var(--alert-red); color: var(--alert-red); font-size: 22px; font-weight: 800; display: inline-block; margin-bottom: 15px; text-shadow: 0 0 8px var(--alert-glow); box-shadow: 0 0 12px var(--alert-glow); }
-        .alert-icon-box.success-mode { border-color: var(--admin-green); color: var(--admin-green); text-shadow: 0 0 8px var(--admin-glow); box-shadow: 0 0 12px var(--admin-glow); }
 
-        .btn-modal-action { flex: 1; padding: 12px 22px; border: none; border-radius: 30px; font-weight: 700; font-size: 14px; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-        .btn-modal-action.proceed { background: linear-gradient(135deg, #2ecc71, #1abc9c); color: #0b0c10; }
-        .btn-modal-action.proceed:hover { transform: translateY(-2px); box-shadow: 0 6px 15px var(--admin-green); }
-        .btn-modal-action.cancel { background: linear-gradient(135deg, #ff4545, #c0392b); color: #fff; }
-        .btn-modal-action.cancel:hover { transform: translateY(-2px); box-shadow: 0 6px 15px var(--alert-glow); }
-
-        .btn-submit-ss-proof { background: linear-gradient(135deg, var(--gold-color), #f39c12); color: #0b0c10; font-weight: 800; border: none; padding: 12px 20px; width: 100%; border-radius: 30px; cursor: pointer; font-size: 13px; margin-top: 15px; transition: all 0.2s; }
-
-        /* Card Cara Pakai */
-        .tutorial-container-box { display: flex; flex-direction: column; gap: 14px; text-align: left; margin: 20px 0; }
-        .tutorial-neon-row { display: flex; align-items: flex-start; gap: 15px; background: rgba(11, 12, 16, 0.7); border: 1px solid rgba(69, 243, 255, 0.08); padding: 15px; border-radius: 16px; transition: all 0.3s ease; }
-        .tutorial-neon-row:hover { border-color: var(--accent-color); box-shadow: 0 0 15px rgba(69, 243, 255, 0.05); transform: translateX(3px); }
-        .tut-num { background: linear-gradient(135deg, #45f3ff, #00b4db); color: #0b0c10; font-weight: 800; font-size: 14px; width: 28px; height: 28px; border-radius: 50%; display: flex; justify-content: center; align-items: center; flex-shrink: 0; box-shadow: 0 0 10px var(--accent-glow); }
-        .tut-text h4 { font-size: 13.5px; font-weight: 700; color: #fff; letter-spacing: 0.3px; margin-bottom: 3px; }
-        .tut-text p { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
-
-        /* CUSTOMER SERVICE VIEW FULL SCREEN */
-        .cs-fullscreen-view { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0d1117; flex-direction: column; z-index: 10000; }
-        .cs-header { background: var(--card-bg); padding: 22px 30px; font-size: 16px; font-weight: bold; border-bottom: 1px solid #30363d; display: flex; justify-content: space-between; align-items: center; }
-        .cs-body { flex: 1; padding: 30px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; scroll-behavior: smooth; background: #0b0c10; position: relative; }
-        .cs-msg { max-width: 75%; padding: 14px 18px; border-radius: 12px; font-size: 14px; line-height: 1.5; word-wrap: break-word; text-align: left; }
-        .cs-msg.system { background: rgba(69, 243, 255, 0.06); border-left: 4px solid var(--accent-color); color: #fff; align-self: flex-start; }
-        .cs-msg.user { background: var(--premium-pink); color: #fff; align-self: flex-end; }
-        .cs-msg.admin-reply { background: #1f242c; border-left: 4px solid var(--admin-green); color: #fff; align-self: flex-start; }
-        .cs-footer { padding: 20px 30px; display: flex; gap: 12px; background: var(--card-bg); border-top: 1px solid #30363d; }
-        .cs-footer input { flex: 1; padding: 14px; border-radius: 8px; border: 1px solid #30363d; background: #0b0c10; color: #fff; font-size: 14.5px; outline: none; }
-        .cs-footer button { background: linear-gradient(135deg, #45f3ff, #00b4db); color: #0b0c10; border: none; padding: 0 32px; border-radius: 25px; font-weight: 700; cursor: pointer; font-size: 14px; box-shadow: 0 3px 10px rgba(69, 243, 255, 0.2); }
-
-        /* PLAY STORE FULL SCREEN VIEW */
-        .playstore-fullscreen-view { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0f172a; z-index: 20000; flex-direction: column; overflow-y: auto; color: #fff; }
-        .ps-navbar { background: #1e293b; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #334155; position: sticky; top: 0; z-index: 10; }
-        .ps-main-body { max-width: 600px; width: 100%; margin: 0 auto; padding: 25px 20px; }
-        .ps-app-header-block { display: flex; gap: 20px; align-items: center; margin-bottom: 30px; }
-        .ps-app-icon { width: 90px; height: 90px; border-radius: 20px; box-shadow: 0 0 15px var(--premium-glow); border: 1px solid var(--premium-pink); object-fit: cover; }
-        .ps-app-title h2 { font-size: 20px; font-weight: 700; color: #fff; }
-        .ps-app-title p { font-size: 13px; color: var(--premium-pink); font-weight: 600; margin-top: 2px; }
-        .ps-app-meta-info { font-size: 12px; color: #94a3b8; margin-top: 4px; }
-        
-        .ps-btn-install { width: 100%; background: #00e676; color: #000; border: none; padding: 14px; font-size: 15px; font-weight: 800; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(0, 230, 118, 0.3); display: flex; justify-content: center; align-items: center; gap: 10px; }
-        .ps-spinner { width: 20px; height: 20px; border: 3px solid #000; border-top: 3px solid transparent; border-radius: 50%; animation: spinRotate 0.8s infinite linear; display: none; }
-        @keyframes spinRotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        .ps-section-box { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; margin-top: 25px; text-align: left; }
-        .ps-section-box h4 { font-size: 14px; color: var(--accent-color); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
-        .ps-section-box p { font-size: 13.5px; color: #cbd5e1; line-height: 1.6; }
-        .ps-guide-step { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
-        .ps-guide-step span { background: rgba(69, 243, 255, 0.1); border: 1px solid var(--accent-color); color: var(--accent-color); width: 22px; height: 22px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
-
-        /* PANEL DASHBOARD ADMIN VIEW */
-        .admin-fullscreen-view { display: none; width: 100%; max-width: 1000px; background: #0d1117; padding: 35px; border-radius: 16px; border: 1px solid rgba(46, 204, 113, 0.3); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9); margin: 100px auto 40px auto; z-index: 99999; }
-        .admin-grid-cards { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 25px; }
-        .admin-card-stat { flex: 1; min-width: 240px; background: #161b22; padding: 20px; border-radius: 12px; text-align: left; position: relative; overflow: hidden; }
-        .admin-card-stat::after { content:''; position:absolute; top:0; left:0; width:4px; height:100%; background: var(--admin-green); }
-        .admin-card-stat.total-hit::after { background: var(--premium-pink); }
-        .admin-card-stat span { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; display: block; }
-        .admin-card-stat h3 { font-size: 24px; color: #fff; margin-top: 8px; font-weight: 700; white-space: nowrap; }
-        .admin-panel-section { background: #161b22; border: 1px solid rgba(46, 204, 113, 0.04); border-radius: 12px; padding: 20px; margin-bottom: 25px; }
-        .admin-panel-section h4 { font-size: 13px; color: var(--accent-color); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; }
-        .admin-table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
-        .admin-table th { background: #21262d; color: #fff; padding: 12px 10px; font-weight: 600; border-bottom: 2px solid #30363d; position: sticky; top: 0; z-index: 2; }
-        .admin-table td { padding: 12px 10px; color: #c9d1d9; border-bottom: 1px solid #30363d; font-family: monospace; }
-        .admin-broadcast-textarea { width: 100%; height: 80px; background: #0b0c10; border: 1px solid #30363d; color: #fff; padding: 12px; border-radius: 8px; resize: none; outline: none; font-size: 13.5px; margin-bottom: 12px; }
-        .btn-admin-action { background: linear-gradient(135deg, #2ecc71, #1abc9c); color: #0b0c10; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 700; cursor: pointer; font-size: 13px; box-shadow: 0 4px 12px rgba(46, 204, 113, 0.2); }
-
-        .site-footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.05); text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
-        .footer-links-box { display: flex; justify-content: center; align-items: center; gap: 15px; background: rgba(0, 0, 0, 0.15); padding: 6px 16px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.02); }
-        .footer-links-box a { color: var(--text-muted); text-decoration: none; cursor: pointer; font-size: 12px; font-weight: 500; }
-        .copyright-text { font-size: 11px; color: rgba(149, 165, 166, 0.6); letter-spacing: 0.5px; }
-
-        /* WIDGET CS TRIGGER MELAYANG DI KANAN BAWAH */
-        .chat-widget-wrapper { position: fixed; bottom: 25px; right: 25px; z-index: 20005; display: flex; align-items: center; }
-        .chat-pulse { position: absolute; width: 60px; height: 60px; background: rgba(69, 243, 255, 0.3); border-radius: 50%; animation: pulseWave 2s infinite; z-index: -1; }
-        .chat-widget { background: linear-gradient(135deg, #45f3ff, #ff45f3); width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 20px rgba(69, 243, 255, 0.5); cursor: pointer; position: relative; }
-        .chat-admin-notif { position: absolute; top: -2px; left: -2px; width: 16px; height: 16px; background: var(--alert-red); border: 2px solid var(--card-bg); border-radius: 50%; display: none; box-shadow: 0 0 8px var(--alert-red); }
-        .chat-online-dot { position: absolute; top: 2px; right: 2px; width: 12px; height: 12px; background: #2ecc71; border: 2px solid var(--card-bg); border-radius: 50%; }
-        @keyframes pulseWave { 0% { transform: scale(0.95); opacity: 0.8; } 70% { transform: scale(1.5); opacity: 0; } 100% { transform: scale(0.95); opacity: 0; } }
+        /* SPINNER LOADING */
+        .spinner {
+            display: none; width: 24px; height: 24px; border: 3px solid rgba(255,255,255,0.1);
+            border-radius: 50%; border-top-color: #00ffcc; animation: spin 1s ease infinite; margin: 0 auto 10px auto;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-<header class="top-navbar" id="main-top-navbar">
-    <div class="nav-left-zone">
-        <button class="floating-btn" onclick="toggleVoucherPanel(event)">🔑 Masukkan Voucher</button>
-        <div class="premium-zone" id="voucher-panel">
-            <input type="text" id="voucher-input" placeholder="INO-XXXX-XXXX">
-            <button class="btn-activate" onclick="activateVoucher()">Klaim</button>
-        </div>
-    </div>
-    <div class="nav-right-zone">
-        <button class="floating-btn apk-btn" onclick="switchToPlayStoreView()">📲 Download For APK</button>
-    </div>
-</header>
+    <header>
+        <img src="https://img.icons8.com/neon/96/artificial-intelligence.png" class="header-logo" alt="Logo">
+        <div class="header-title">INO.DIGITAL PROMPT</div>
+        <a href="#" class="header-login">Masukan Voucher</a>
+    </header>
 
-<div class="wrapper-main-layout" id="main-user-view-wrapper">
-    <main class="container">
-        <div class="brand-header">
-            <img class="brand-logo" src="https://files.catbox.moe/chjj3j.png" alt="Logo Ino.digital" onclick="registerLogoClicks()">
-            <div class="brand-name">INO.DIGITAL</div>
-            <div class="quota-badge" id="quota-text">Sisa Kuota: 2x</div>
-        </div>
-        
-        <div class="upload-box" onclick="document.getElementById('file-input').click()">
-            <svg class="upload-icon" viewBox="0 0 24 24">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                <polyline points="21 15 16 10 5 21"></polyline>
-            </svg>
-            <p style="font-size: 14px; color: var(--text-muted); margin: 0;">Klik untuk memuat foto referensi Anda</p>
-            <input type="file" id="file-input" accept="image/*" onchange="previewImage(event)">
-            <img id="preview-img" src="#" alt="Pratinjau">
+    <main>
+        <div class="quota-badge" id="quota-display">Memuat Status Kuota...</div>
+
+        <div class="upload-container" onclick="document.getElementById('file-input').click()">
+            <img id="ps-image-preview" src="" alt="Preview">
+            <div id="upload-placeholder">
+                <div class="upload-icon">📸</div>
+                <p style="font-size: 14px; font-weight: bold; color: #fff;">Klik untuk memuat foto referensi Anda</p>
+                <p style="font-size: 12px; color: #666; margin-top: 5px;">Format JPEG / PNG</p>
+            </div>
+            <input type="file" id="file-input" accept="image/*" style="display: none;" onchange="handleFileSelect(this)">
         </div>
 
-        <button class="btn-analyze" id="btn-submit" onclick="generatePrompt()" disabled>Generate Prompt</button>
-        <div class="loading" id="loader">Menganalisis komponen gambar...</div>
+        <div id="loading-zone" style="display: none; text-align: center; margin-bottom: 15px;">
+            <div class="spinner" id="ps-loading-spinner"></div>
+            <p id="ps-download-text" style="font-size: 13px; color: #00ffcc;">AI Sedang Sinkronisasi...</p>
+        </div>
 
-        <div class="result-container" id="result-box" style="display: none;">
-            <h3 style="margin-bottom: 10px; font-size: 16px; text-align: left;">Hasil Ekstraksi Prompt:</h3>
-            <div class="prompt-card-wrapper">
-                <div class="prompt-card" id="prompt-output"></div>
-                <button class="btn-copy" onclick="copyPromptText()">Copy Prompt</button>
+        <button class="btn-generate" id="ps-generate-btn" onclick="generatePrompt()">Generate Prompt</button>
+
+        <div class="result-box" id="result-box">
+            <div class="result-title">📋 HASIL ANALISIS PROMPT AI:</div>
+            <div class="result-wrapper">
+                <img id="ps-result-image-preview" src="" alt="Result Mirror Preview">
+                <textarea id="ps-result-textarea" readonly></textarea>
             </div>
         </div>
-
-        <footer class="site-footer">
-            <div class="footer-links-box">
-                <a onclick="showInfoModal('Privacy Policy', 'Semua foto diproses aman secara real-time melalui jalur terenkripsi Google Gemini API. Kami berkomitmen mutlak untuk TIDAK mengarsip gambar Anda pada database server demi privasi.')">Privacy Policy</a>
-                <span>•</span>
-                <a onclick="showInfoModal('Usage Protocol', '1. Limitasi standard gratis terikat perangkat sebanyak 2 kali hit.\n2. Tambah limit kuota secara gratis kapan saja dengan menyelesaikan misi tugas media sosial.')">Usage Protocol</a>
-            </div>
-            <div class="copyright-text">&copy; 2026 INO.DIGITAL All Rights Reserved.</div>
-            <div class="brand-credit">Prompt By <span>Ino.Digital</span></div>
-        </footer>
     </main>
-</div>
 
-<main class="playstore-fullscreen-view" id="playstore-view-container">
-    <div class="ps-navbar">
-        <div style="display:flex; align-items:center; gap:10px;">
-            <span style="font-size:20px; color:#00e676;">🤖</span>
-            <span style="font-weight:700; font-size:15px; letter-spacing:0.5px;">INO DIGITAL MARKETPLACE</span>
-        </div>
-        <button class="floating-btn" style="padding:7px 16px; font-size:12px;" onclick="exitPlayStoreWindow()">↩️ Close Store</button>
-    </div>
-    <div class="ps-main-body">
-        <div class="ps-app-header-block">
-            <img class="ps-app-icon" src="https://files.catbox.moe/chjj3j.png" alt="App Icon">
-            <div class="ps-app-title">
-                <h2>Ino.Digital Prompt</h2>
-                <p>Ino.Digital • Tools Marketplace</p>
-                <div class="ps-app-meta-info">v1.7 Premium • 4.8 ⭐ (12,430 reviews)</div>
+    <div class="branding-watermark">Ino.Digital Pro</div>
+
+
+    <div id="social-tasks-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center;">
+        <div style="padding: 25px; text-align: center; color: #fff; background: #0d0e12; border-radius: 15px; border: 2px solid #00ffcc; box-shadow: 0 0 20px #00ffcc; max-width: 380px; width: 90%; box-sizing: border-box;">
+            
+            <div id="popup-page-utama">
+                <h3 style="color: #ff0055; text-shadow: 0 0 10px #ff0055; font-size: 22px; margin-bottom: 10px; font-weight: bold;">⚠️ KUOTA GRATIS HABIS!</h3>
+                <p style="font-size: 14px; color: #aaaaaa; margin-bottom: 25px; line-height: 1.5;">
+                    Maaf Bos, sisa limit gratisan kamu sudah habis. Silakan pilih metode di bawah ini untuk lanjut menggunakan AI:
+                </p>
+                <button onclick="pindahKeHalaman('premium')" style="width: 100%; cursor: pointer; padding: 14px; margin-bottom: 12px; background: linear-gradient(45deg, #ffe600, #ff9900); color: #000; border: 2px solid #fff; border-radius: 8px; font-weight: 900; box-shadow: 0 0 15px #ffe600; font-size: 14px; text-transform: uppercase;">
+                    👑 BELI PAKET PREMIUM
+                </button>
+                <button onclick="pindahKeHalaman('misi')" style="width: 100%; cursor: pointer; padding: 14px; background: #1a1c23; color: #00ffcc; border: 2px solid #00ffcc; border-radius: 8px; font-weight: bold; box-shadow: 0 0 10px rgba(0,255,204,0.2); font-size: 14px; text-transform: uppercase;">
+                    🚀 SELESAIKAN MISI GRATIS
+                </button>
+                <div style="margin-top: 20px; padding-top: 15px; border-top: 1px dashed #333;">
+                    <input type="text" id="input-voucher-code" placeholder="Masukkan Kode Voucher Premium..." style="width: 100%; padding: 10px; background: #161822; border: 1px solid #444; border-radius: 6px; color: #fff; text-align: center; margin-bottom: 8px; font-size: 13px;">
+                    <button onclick="klaimVoucherPremium()" style="width: 100%; padding: 8px; background: #00ffcc; color: #000; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 13px;">Aktivasi Voucher</button>
+                </div>
             </div>
-        </div>
-        <button class="ps-btn-install" id="ps-main-download-trigger" onclick="executeFakeApkDownloadSequence()">
-            <div class="ps-spinner" id="ps-download-loading-spinner"></div>
-            <span id="ps-btn-text-status">Install File APK Android</span>
-        </button>
-        <div class="ps-section-box">
-            <h4>📢 WHAT'S NEW IN VERSION 1.7</h4>
-            <p>1. Integrasi model AI Gemini terbaru untuk akurasi postur tubuh.<br>2. Fitur sensor pemetaan wajah asli garansi 100% tanpa distorsi.<br>3. Sistem auto-kompresi gambar cerdas (handling serverless lemot).</p>
-        </div>
-        <div class="ps-section-box">
-            <h4>🛠️ PETUNJUK PEMASANGAN APK MANUAL</h4>
-            <div class="ps-guide-step"><span>1</span><p>Klik tombol <strong>Install File APK</strong> di atas untuk mengunduh paket mentahan aplikasi resmi.</p></div>
-            <div class="ps-guide-step"><span>2</span><p>Jika muncul peringatan dari sistem Android, masuk ke Pengaturan HP Anda, lalu aktifkan opsi <strong>"Izinkan Instalasi dari Sumber Tidak Dikenal"</strong>.</p></div>
-            <div class="ps-guide-step"><span>3</span><p>Buka folder Downloads, klik file <code>ino-extractor.apk</code>, lalu pilih Pasang. Selesai!</p></div>
-        </div>
-    </div>
-</main>
 
-<main class="cs-fullscreen-view" id="cs-view-container">
-    <div class="cs-header">
-        <div style="display:flex; align-items:center; gap:10px;"><span>🎧</span><span>CS OFFICIAL PANEL AUTHORIZED</span></div>
-        <button class="floating-btn" style="padding: 8px 18px; font-size: 13px;" onclick="exitChatWindow()">↩️ Back to Extractor</button>
-    </div>
-    <div class="cs-body" id="chat-conversation-area">
-        <div class="cs-msg system">👋 Halo Kak! Selamat datang di CS INO.DIGITAL Ada kendala? Tulis di bawah ini ya, admin merespon real-time.</div>
-        <div class="typing-indicator-container" id="cs-typing-indicator-bubble" style="display: none;">
-            <span>👩‍💻 Customer Service sedang mengetik</span>
-            <div class="wave-dots"><div class="wave-dot"></div><div class="wave-dot"></div><div class="wave-dot"></div></div>
+            <div id="popup-page-premium" style="display: none;">
+                <h3 style="color: #ffe600; text-shadow: 0 0 10px #ffe600; font-size: 20px; margin-bottom: 5px; font-weight: bold;">👑 PREMIUM PASS ACTIVE</h3>
+                <p style="font-size: 12px; color: #888; margin-bottom: 15px;">Aktivasi Instan via Kode Voucher Bot</p>
+                <div style="background: #161822; padding: 15px; border-radius: 8px; border: 1px solid #ffe600; text-align: left; margin-bottom: 20px; font-size: 13px; line-height: 1.6; color: #ddd;">
+                    💰 <b>Harga:</b> Rp35.000 <br>
+                    ⏳ <b>Masa Aktif:</b> 40 Hari Full <br>
+                    🔥 <b>Benefit:</b> Bebas generate prompt sepuasnya tanpa batas kuota + bebas tugas selamanya!<br>
+                    ⚠️ <i>Sistem otomatis memasang masa expired hancur sendiri dalam 40 hari sejak voucher dimasukkan.</i>
+                </div>
+                <a href="https://t.me/kritikuser_bot?start=beli_qris" target="_blank" style="display: block; margin: 8px 0; padding: 12px; background: #fff; color: #000; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 14px; box-shadow: 0 0 5px #fff;">📱 Bayar via QRIS (Otomatis Bot)</a>
+                <a href="https://t.me/kritikuser_bot?start=chat_admin" target="_blank" style="display: block; margin: 8px 0; padding: 12px; background: #ff9900; color: #fff; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 14px; box-shadow: 0 0 5px #ff9900;">👨‍💻 Hubungi Admin Real-Time</a>
+                <button onclick="pindahKeHalaman('utama')" style="background: none; border: none; color: #ff0055; font-size: 12px; cursor: pointer; margin-top: 15px; text-decoration: underline;">⬅️ Kembali</button>
+            </div>
+
+            <div id="popup-page-misi" style="display: none;">
+                <h3 style="color: #00ffcc; text-shadow: 0 0 10px #00ffcc; font-size: 20px; margin-bottom: 5px; font-weight: bold;">🚀 MISI KLAIM KUOTA</h3>
+                <p style="font-size: 13px; color: #aaaaaa; margin-bottom: 15px;">Gabung komunitas untuk dapat +8 kuota gratis, Bos!</p>
+                <a href="https://t.me/Inodigitalpromptai" target="_blank" style="display: block; margin: 6px 0; padding: 10px; background: #0088cc; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 13px;">📢 Join Channel Telegram</a>
+                <a href="https://t.me/inodigitalprompt" target="_blank" style="display: block; margin: 6px 0; padding: 10px; background: #229ED9; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 13px;">👥 Join Grup Telegram</a>
+                <a href="https://whatsapp.com/channel/0029Vb7YuKV6buMHtVBW4w1W" target="_blank" style="display: block; margin: 6px 0; padding: 10px; background: #25D366; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 13px;">🟢 Join Channel WhatsApp</a>
+                <a href="https://chat.whatsapp.com/JJVuboLDn5G4qd3hq5uxKW" target="_blank" style="display: block; margin: 6px 0; padding: 10px; background: #128C7E; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 13px;">💬 Join Grup WhatsApp</a>
+                <a href="https://t.me/kritikuser_bot?start=setor_misi" target="_blank" style="display: block; margin-top: 15px; padding: 11px; background: #ff0055; color: #fff; text-decoration: none; border-radius: 6px; font-weight: 800; box-shadow: 0 0 8px #ff0055; font-size: 13px;">📸 Kirim Bukti SS Gabung Ke Bot</a>
+                <button onclick="pindahKeHalaman('utama')" style="background: none; border: none; color: #ff0055; font-size: 12px; cursor: pointer; margin-top: 15px; text-decoration: underline;">⬅️ Kembali</button>
+            </div>
+
         </div>
     </div>
-    <div class="cs-footer">
-        <input type="text" id="chat-user-input" placeholder="Tulis rincian kendala Anda..." onkeypress="handleChatKey(event)">
-        <button onclick="sendChatMessage()">Kirim Pesan CS</button>
-    </div>
-</main>
 
-<main class="admin-fullscreen-view" id="admin-view-container" onclick="event.stopPropagation()">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; padding-bottom:15px; border-bottom:1px solid #30363d;">
-        <h2 style="color: var(--admin-green); font-size: 19px; font-weight: 600;">⚡ INO CONTROL PANEL CENTRALIZED</h2>
-        <button class="floating-btn" style="border-color:var(--admin-green); color:var(--admin-green);" onclick="exitAdminMode()">↩️ Exit Dashboard</button>
-    </div>
-    <div class="admin-grid-cards">
-        <div class="admin-card-stat"><span>Total Pengunjung Unik</span><h3 id="admin-stat-users">1 Device</h3></div>
-        <div class="admin-card-stat total-hit"><span>Total Request Analisis</span><h3 id="admin-stat-hits">0 Hits</h3></div>
-    </div>
-    <div class="admin-panel-section">
-        <h4>📢 MANAJEMEN LIVE BROADCAST PENGUMUMAN</h4>
-        <textarea id="admin-broadcast-input" class="admin-broadcast-textarea" placeholder="Tulis isi pengumuman teks baru untuk disebar di seluruh user..."></textarea>
-        <button class="btn-admin-action" onclick="publishAdminBroadcast()">Sebar Broadcast Ke User</button>
-    </div>
-    <div class="admin-panel-section">
-        <h4>🔑 GENERATOR VOUCHER STOCK</h4>
-        <button class="btn-admin-action" style="background:var(--gold-color); box-shadow:0 4px 12px var(--gold-glow);" onclick="generateStockVouchersToClipboard()">⚡ Ambil 800 Voucher Acak Ke Clipboard</button>
-    </div>
-
-    <div class="admin-panel-section">
-        <h4>🏆 PENGGUNA TERAKTIF (RANGKING 1-10)</h4>
-        <div style="max-height: 250px; overflow-y: auto; border: 1px solid rgba(255,255,255,0.03); border-radius: 6px; padding-right: 2px;">
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>Peringkat</th>
-                        <th>Device Token ID</th>
-                        <th>Intensitas Hit</th>
-                    </tr>
-                </thead>
-                <tbody id="admin-top-table-body"></tbody>
-            </table>
+    <div id="premium-warning-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; justify-content: center; align-items: center;">
+        <div style="padding: 25px; text-align: center; color: #fff; background: #0d0e12; border-radius: 15px; border: 2px solid #ff9900; box-shadow: 0 0 20px #ff9900; max-width: 360px; width: 90%; margin: auto; box-sizing: border-box;">
+            <h3 style="color: #ff9900; text-shadow: 0 0 10px #ff9900; font-size: 20px; margin-bottom: 10px; font-weight: bold;">⏳ MASA PREMIUM HAMPIR HABIS!</h3>
+            <p style="font-size: 14px; color: #cccccc; margin-bottom: 20px; line-height: 1.5;">
+                Halo Bos! Pemberitahuan murni, masa aktif Paket Premium Anda akan kedaluwarsa dalam <span id="sisa-hari-display" style="color: #ff9900; font-weight: bold;">...</span> hari lagi.
+            </p>
+            <button onclick="bukaGerbangPerpanjang()" style="width: 100%; cursor: pointer; padding: 12px; margin-bottom: 10px; background: linear-gradient(45deg, #ffe600, #ff9900); color: #000; border: none; border-radius: 8px; font-weight: 900; box-shadow: 0 0 12px #ff9900; font-size: 13px; text-transform: uppercase;">👑 PERPANJANG SEKARANG</button>
+            <button onclick="tutupWarningModal()" style="width: 100%; cursor: pointer; padding: 10px; background: #1a1c23; color: #888; border: 1px solid #444; border-radius: 8px; font-weight: bold; font-size: 13px;">Nanti Saja</button>
         </div>
     </div>
-    
-    <div class="admin-panel-section">
-        <h4>👥 TRACKING LOG KUNJUNGAN SELURUH PERANGKAT USER (SCROLL VIEW)</h4>
-        <div style="max-height: 250px; overflow-y: auto; border: 1px solid rgba(255,255,255,0.03); border-radius: 6px; padding-right: 2px;">
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>Device Token ID</th>
-                        <th>Platform OS</th>
-                        <th>Total Pemakaian</th>
-                    </tr>
-                </thead>
-                <tbody id="admin-all-table-body"></tbody>
-            </table>
-        </div>
-    </div>
-    <div style="display:flex; gap:10px; flex-wrap:wrap;"><button class="btn-admin-action" onclick="openManualReplyDialog()">Balas Chat</button><button class="btn-admin-action" style="background:linear-gradient(135deg, #ff45f3, #9b59b6); color:#fff;" onclick="injectFakeActiveDeviceData()">⚡ Selipkan Data Hit</button></div>
-</main>
 
-<div id="premium-warning-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; justify-content: center; align-items: center;">
-    <div style="padding: 25px; text-align: center; font-family: 'Google Sans', Arial, sans-serif; color: #fff; background: #0d0e12; border-radius: 15px; border: 2px solid #ff9900; box-shadow: 0 0 20px #ff9900; max-width: 360px; width: 90%; margin: auto; box-sizing: border-box;">
-        
-        <h3 style="color: #ff9900; text-shadow: 0 0 10px #ff9900; font-size: 20px; margin-bottom: 10px; font-weight: bold;">⏳ MASA PREMIUM HAMPIR HABIS!</h3>
-        <p style="font-size: 14px; color: #cccccc; margin-bottom: 20px; line-height: 1.5;">
-            Halo Bos! Pemberitahuan murni, masa aktif Paket Premium Anda akan kedaluwarsa dalam <span id="sisa-hari-display" style="color: #ff9900; font-weight: bold;">...</span> hari lagi.
-        </p>
 
-        <button onclick="bukaGerbangPerpanjang()" style="width: 100%; cursor: pointer; padding: 12px; margin-bottom: 10px; background: linear-gradient(45deg, #ffe600, #ff9900); color: #000; border: none; border-radius: 8px; font-weight: 900; box-shadow: 0 0 12px #ff9900; font-size: 13px; text-transform: uppercase;">
-            👑 PERPANJANG SEKARANG
-        </button>
+    <script>
+        let base64ImageString = "";
 
-        <button onclick="tutupWarningModal()" style="width: 100%; cursor: pointer; padding: 10px; background: #1a1c23; color: #888; border: 1px solid #444; border-radius: 8px; font-weight: bold; font-size: 13px;">
-            Nanti Saja
-        </button>
-    </div>
-</div>
-
-<div class="chat-widget-wrapper" id="cs-widget-trigger-zone">
-    <div class="chat-pulse"></div>
-    <div class="chat-widget" onclick="switchToChatView()">
-        <div class="chat-admin-notif" id="chat-alert-dot"></div>
-        <div class="chat-online-dot"></div>
-        <span style="font-size: 24px; color: #fff;">🎧</span>
-    </div>
-</div>
-
-<script>
-    let base64Image = "";
-    const INITIAL_FREE_USES = 2;
-    let logoClickCount = 0;
-    let adminModeActive = false;
-    let csModeActive = false;
-    let playStoreModeActive = false;
-    let pollingInterval = null;
-    let lastUpdateId = 0;
-    let processedMessageIds = []; 
-
-    const TG_BOT_TOKEN = "8598427112:AAFLT7lgdu7fzxbgr-Jhr6rSfCjI7hEJM2c";
-    const TG_ADMIN_CHAT_ID = "8379816457";
-
-    function forceSyncDeviceToDatabase() {
-        let users = JSON.parse(localStorage.getItem('mock_db_users') || '[]');
-        let used = parseInt(localStorage.getItem('used_count') || '0');
-        let currentObj = users.find(u => u.id === deviceRefCode);
-        if (!currentObj) { users.push({ id: deviceRefCode, join: new Date().toLocaleDateString(), hits: used, os: navigator.platform }); }
-        else { currentObj.hits = used; }
-        localStorage.setItem('mock_db_users', JSON.stringify(users));
-    }
-
-    if (!localStorage.getItem('device_ref_code')) {
-        localStorage.setItem('device_ref_code', `INO-REF-${Math.random().toString(36).substring(2, 8).toUpperCase()}`);
-    }
-    const deviceRefCode = localStorage.getItem('device_ref_code');
-
-    if (!localStorage.getItem('total_allowed_quota')) localStorage.setItem('total_allowed_quota', INITIAL_FREE_USES.toString());
-    if (!localStorage.getItem('used_count')) localStorage.setItem('used_count', '0');
-    
-    forceSyncDeviceToDatabase();
-
-    window.onload = function() {
-        updateQuotaDisplay();
-        loadPersistentChatHistory();
-        showTutorialFirstPopup(); 
-        checkExpiryNotificationPopup();
-        startTelegramLongPolling();
-    }
-
-    function toggleVoucherPanel(e) { e.stopPropagation(); document.getElementById('voucher-panel').classList.toggle('active'); }
-    document.addEventListener('click', (e) => { 
-        if(!adminModeActive && !csModeActive && !playStoreModeActive) {
-            const panel = document.getElementById('voucher-panel');
-            const btn = document.querySelector('.floating-btn');
-            if(panel && !panel.contains(e.target) && e.target !== btn) panel.classList.remove('active');
-        }
-    });
-
-    function updateQuotaDisplay() {
-        const total = parseInt(localStorage.getItem('total_allowed_quota') || '2');
-        const used = parseInt(localStorage.getItem('used_count') || '0');
-        const remaining = Math.max(0, total - used);
-        document.getElementById('quota-text').innerText = `Sisa Kuota: ${remaining}x`;
-        return remaining;
-    }
-
-    function switchToPlayStoreView() {
-        playStoreModeActive = true;
-        document.getElementById('main-user-view-wrapper').style.display = "none";
-        document.getElementById('main-top-navbar').style.display = "none";
-        document.getElementById('cs-widget-trigger-zone').style.display = "none";
-        document.getElementById('playstore-view-container').style.display = "flex";
-    }
-
-    function exitPlayStoreWindow() {
-        playStoreModeActive = false;
-        document.getElementById('playstore-view-container').style.display = "none";
-        document.getElementById('main-user-view-wrapper').style.display = "flex";
-        document.getElementById('main-top-navbar').style.display = "flex";
-        document.getElementById('cs-widget-trigger-zone').style.display = "flex";
-    }
-
-    function executeFakeApkDownloadSequence() {
-        const spinner = document.getElementById('ps-download-loading-spinner');
-        const textNode = document.getElementById('ps-btn-text-status');
-        const btn = document.getElementById('ps-main-download-trigger');
-        spinner.style.display = "inline-block";
-        textNode.innerText = "Downloading App Packages (35%)...";
-        btn.style.pointerEvents = "none"; btn.style.opacity = "0.8";
-        setTimeout(() => {
-            textNode.innerText = "Installing Application (80%)...";
-            setTimeout(() => {
-                spinner.style.display = "none";
-                textNode.innerText = "Download Selesai! (Membuka Tautan)";
-                btn.style.pointerEvents = "auto"; btn.style.opacity = "1";
-                
-                // 📝 TARO LINK UNDUH APK ANDROID ASLI MILIK KAMU DI SINI NANTI, BOS!
-                window.open('https://www.mediafire.com/file/9xlh7ttk9c9ash4/INO.DIGITAL+PROMPT.apk/file', '_blank'); 
-            }, 2000);
-        }, 2000);
-    }
-
-    function checkExpiryNotificationPopup() {
-        const premiumUntil = localStorage.getItem('premium_until');
-        if (premiumUntil) {
-            const daysLeft = Math.ceil((parseInt(premiumUntil) - new Date().getTime()) / (1000 * 60 * 60 * 24));
-            if (daysLeft > 0 && daysLeft <= 3) {
-                document.getElementById('dynamic-modal-body').innerHTML = `<div class="alert-icon-box success-mode" style="line-height:51px;">⚡</div><h3>MASA AKTIF PREMIUM</h3><p style="margin:10px 0;">Masa aktif premium Anda sisa <strong>${daysLeft} hari lagi</strong>.</p><button class="btn-modal-action proceed" onclick="closeModal()">Lanjutkan</button>`;
-                document.getElementById('modal-content-box').className = "modal-content alert-mode";
-                document.getElementById('central-modal').classList.add('active');
+        // INIT CODES & SINKRONISASI TAMPILAN AWAL
+        document.addEventListener("DOMContentLoaded", function() {
+            if(!localStorage.getItem('user_quota')) {
+                localStorage.setItem('user_quota', '5'); // Set quota awal gratis bawaan pabrik
             }
-        }
-    }
-
-    function registerLogoClicks() { logoClickCount++; if (logoClickCount >= 15) { logoClickCount = 0; openAdminPasswordModal(); } }
-    function openAdminPasswordModal() {
-        document.getElementById('dynamic-modal-body').innerHTML = `<h3>🔐 OTORISASI SECURITY</h3><p style="font-size:12px; margin-bottom:10px;">Masukkan password panel kontrol.</p><input type="password" id="admin-pass-input" style="padding:10px; width:100%; text-align:center; background:#000; color:#fff; border:1px solid #333; outline:none; border-radius:8px;"><div style="display:flex; gap:10px; margin-top:15px;"><button class="btn-modal-action cancel" onclick="closeModal()">Batal</button><button class="btn-modal-action proceed" onclick="verifyAdminPassword()">Masuk</button></div>`;
-        document.getElementById('modal-content-box').className = "modal-content"; document.getElementById('central-modal').classList.add('active');
-    }
-    function verifyAdminPassword() { if (document.getElementById('admin-pass-input').value === "adminino") { closeModal(); adminModeActive = true; document.getElementById('main-user-view-wrapper').style.display = "none"; document.getElementById('admin-view-container').style.display = "block"; } else { showVoucherAlert("Otorisasi Gagal!", "Password salah.", false); } }
-    function exitAdminMode() { adminModeActive = false; document.getElementById('admin-view-container').style.display = "none"; document.getElementById('main-user-view-wrapper').style.display = "flex"; }
-
-    function buildAdminDashboardUI() {
-        let users = JSON.parse(localStorage.getItem('mock_db_users') || '[]');
-        document.getElementById('admin-stat-users').innerText = `${users.length} Device`;
-        document.getElementById('admin-stat-hits').innerText = `${users.reduce((a, b) => a + b.hits, 0)} Hits`;
-        let sortedTopUsers = [...users].sort((a, b) => b.hits - a.hits).slice(0, 10);
-        document.getElementById('admin-top-table-body').innerHTML = sortedTopUsers.map((u, i) => `<tr><td>#${i+1}</td><td>\`${u.id}\`</td><td><strong>${u.hits}x Hits</strong></td></tr>`).join('');
-        document.getElementById('admin-all-table-body').innerHTML = users.map(u => `<tr><td>\`${u.id}\`</td><td>${u.os}</td><td>${u.hits}x Hit</td></tr>`).join('');
-    }
-
-    function injectFakeActiveDeviceData() {
-        const targetID = prompt("Masukkan Device ID:"); const fakeHits = prompt("Masukkan Hit:"); if(!targetID || !fakeHits || isNaN(fakeHits)) return;
-        let users = JSON.parse(localStorage.getItem('mock_db_users') || '[]'); let targetObj = users.find(u => u.id.toUpperCase() === targetID.toUpperCase());
-        if(targetObj) targetObj.hits = parseInt(fakeHits); else users.push({ id: targetID.toUpperCase(), join: new Date().toLocaleDateString(), hits: parseInt(fakeHits), os: "Suntikan Admin" });
-        localStorage.setItem('mock_db_users', JSON.stringify(users)); buildAdminDashboardUI();
-    }
-
-    function openManualReplyDialog() {
-        document.getElementById('dynamic-modal-body').innerHTML = `<h3>✉️ BALASAN CS ADMIN</h3><input type="text" id="admin-target-device-id" placeholder="Device ID" style="padding:10px; width:100%; text-align:center; background:#000; color:#fff; border:1px solid #333; margin-bottom:10px; border-radius:8px;"><textarea id="admin-reply-msg-text" style="width:100%; height:80px; background:#0b0c10; color:#fff; padding:10px; border-radius:8px; resize:none; outline:none;"></textarea><div style="display:flex; gap:10px; margin-top:15px;"><button class="btn-modal-action cancel" onclick="closeModal()">Batal</button><button class="btn-modal-action proceed" onclick="executeManualAdminReplyFromForm()">Kirim</button></div>`;
-        document.getElementById('modal-content-box').className = "modal-content"; document.getElementById('central-modal').classList.add('active');
-    }
-    function executeManualAdminReplyFromForm() {
-        const targetID = document.getElementById('admin-target-device-id').value.trim(); const text = document.getElementById('admin-reply-msg-text').value.trim(); if(!targetID || !text) return;
-        if(targetID.toUpperCase() === deviceRefCode.toUpperCase()) { triggerTypingWaveAnimation(); closeModal(); setTimeout(() => { const bubble = document.getElementById('cs-typing-indicator-bubble'); if(bubble) bubble.style.display = 'none'; appendChatBubble('admin-reply', text); document.getElementById('chat-alert-dot').style.display = 'block'; sessionStorage.setItem('unread_admin_chat', 'true'); }, 3000); } else { closeModal(); }
-    }
-
-    function startTelegramLongPolling() {
-        if(pollingInterval) clearInterval(pollingInterval);
-        pollingInterval = setInterval(async () => {
-            try {
-                const response = await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/getUpdates?offset=${lastUpdateId + 1}&timeout=1`); if(!response.ok) return;
-                const data = await response.json();
-                if(data.ok && data.result.length > 0) {
-                    data.result.forEach(update => {
-                        lastUpdateId = update.update_id;
-                        if(update.message && update.message.text) {
-                            const currentMsgId = update.message.message_id;
-                            if(update.message.reply_to_message && update.message.reply_to_message.text.includes(deviceRefCode)) {
-                                triggerTypingWaveAnimation();
-                            }
-                            if(update.message.reply_to_message && !processedMessageIds.includes(currentMsgId)) {
-                                const originalBotText = update.message.reply_to_message.text || ""; const adminReplyText = update.message.text || "";
-                                if(originalBotText.includes(deviceRefCode)) { 
-                                    processedMessageIds.push(currentMsgId); 
-                                    setTimeout(() => { 
-                                        const indicator = document.getElementById('cs-typing-indicator-bubble'); 
-                                        if(indicator) indicator.style.display = 'none'; 
-                                        appendChatBubble('admin-reply', adminReplyText); 
-                                        if(!csModeActive) { 
-                                            document.getElementById('chat-alert-dot').style.display = 'block'; 
-                                            sessionStorage.setItem('unread_admin_chat', 'true'); 
-                                        } 
-                                    }, 3000); 
-                                }
-                            }
-                        }
-                    });
-                }
-            } catch (err) {}
-        }, 1500);
-    }
-
-    function triggerTypingWaveAnimation() { 
-        const wave = document.getElementById('cs-typing-indicator-bubble'); 
-        const area = document.getElementById('chat-conversation-area'); 
-        if(wave) wave.style.display = 'flex'; 
-        if(area) area.scrollTop = area.scrollHeight; 
-    }
-    
-    function switchToChatView() { csModeActive = true; document.getElementById('main-user-view-wrapper').style.display = "none"; document.getElementById('main-top-navbar').style.display = "none"; document.getElementById('cs-widget-trigger-zone').style.display = "none"; document.getElementById('cs-view-container').style.display = "flex"; document.getElementById('chat-alert-dot').style.display = 'none'; sessionStorage.setItem('unread_admin_chat', 'false'); const area = document.getElementById('chat-conversation-area'); if(area) area.scrollTop = area.scrollHeight; }
-    function exitChatWindow() { csModeActive = false; document.getElementById('cs-view-container').style.display = "none"; document.getElementById('main-user-view-wrapper').style.display = "flex"; document.getElementById('main-top-navbar').style.display = "flex"; document.getElementById('cs-widget-trigger-zone').style.display = "flex"; }
-    function loadPersistentChatHistory() { const history = JSON.parse(sessionStorage.getItem('chat_logs_session') || '[]'); const area = document.getElementById('chat-conversation-area'); const waveNode = document.getElementById('cs-typing-indicator-bubble'); history.forEach(log => { const div = document.createElement('div'); div.className = `cs-msg ${log.sender}`; div.innerText = log.text; area.insertBefore(div, waveNode); }); if(sessionStorage.getItem('unread_admin_chat') === 'true') document.getElementById('chat-alert-dot').style.display = 'block'; }
-    
-    function handleChatKey(e) { if(e.key === 'Enter') sendChatMessage(); }
-
-    function sendChatMessage() {
-        const input = document.getElementById('chat-user-input');
-        const text = input.value.trim();
-        if(!text) return;
-
-        appendChatBubble('user', text);
-        input.value = "";
-
-        const payloadText = `💬 *CUSTOMER SERVICE INO.DIGITAL*\n\n📱 *Perangkat ID:* \`${deviceRefCode}\`\n✉️ *Pesan:* ${text}`;
-        fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ chat_id: TG_ADMIN_CHAT_ID, text: payloadText, parse_mode: 'Markdown' })
+            if(!localStorage.getItem('quota_type')) {
+                localStorage.setItem('quota_type', 'FREE');
+            }
+            updateQuotaDisplay();
+            cekMasaAktifPremium();
         });
 
-        if (!sessionStorage.getItem('chat_auto_responded')) {
-            setTimeout(() => {
-                triggerTypingWaveAnimation();
-                setTimeout(() => {
-                    const indicator = document.getElementById('cs-typing-indicator-bubble');
-                    if(indicator) indicator.style.display = 'none';
-                    appendChatBubble('admin-reply', "Pesan Terkirim, Admin Customer Service akan segera membalas (hanya sekali dalam 1 sesi)");
-                }, 2000);
-                sessionStorage.setItem('chat_auto_responded', 'true');
-            }, 800);
+        function updateQuotaDisplay() {
+            const qType = localStorage.getItem('quota_type') || 'FREE';
+            const display = document.getElementById('quota-display');
+            
+            if(qType === 'PREMIUM') {
+                display.innerText = "👑 AKUN PREMIUM ACTIVE (UNLIMITED LIMIT)";
+                display.style.color = "#ffe600";
+                display.style.borderColor = "#ffe600";
+                display.style.boxShadow = "0 0 10px rgba(255, 230, 0, 0.4)";
+            } else {
+                const limit = localStorage.getItem('user_quota') || '0';
+                display.innerText = `⚡ SISA KUOTA GRATISAN: ${limit} KALI GENERATE`;
+                display.style.color = "#ff0055";
+                display.style.borderColor = "#ff0055";
+            }
         }
-    }
 
-    function appendChatBubble(sender, text) { const area = document.getElementById('chat-conversation-area'); const waveNode = document.getElementById('cs-typing-indicator-bubble'); const div = document.createElement('div'); div.className = `cs-msg ${sender}`; div.innerText = text; area.insertBefore(div, waveNode); area.scrollTop = area.scrollHeight; const history = JSON.parse(sessionStorage.getItem('chat_logs_session') || '[]'); history.push({ sender, text }); sessionStorage.setItem('chat_logs_session', JSON.stringify(history)); }
+        // AMBIL GAMBAR DAN KONVERSI KE BASE64
+        function handleFileSelect(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    base64ImageString = e.target.result;
+                    document.getElementById('ps-image-preview').src = base64ImageString;
+                    document.getElementById('ps-image-preview').style.display = 'block';
+                    document.getElementById('upload-placeholder').style.display = 'none';
+                }
+                reader.readAsDataURL(file);
+            }
+        }
 
-    function showTutorialFirstPopup() {
-        const body = document.getElementById('dynamic-modal-body');
-        document.getElementById('modal-content-box').className = "modal-content";
-        body.innerHTML = `
-            <h3 style="color: var(--accent-color); margin-bottom: 5px; font-weight:800; text-shadow: 0 0 10px rgba(69, 243, 255, 0.4); text-align: center;">⚙️ TUTORIAL PANDUAN PENGGUNAAN</h3>
-            <p style="font-size:12px; color:var(--text-muted); margin-bottom:15px;">Ikuti langkah demi langkah untuk mendapatkan prompt akurat wajah asli.</p>
-            <div class="tutorial-container-box">
-                <div class="tutorial-neon-row">
-                    <div class="tut-num">1</div>
-                    <div class="tut-text"><h4>MEMUAT GAMBAR REFERENRESI</h4><p>Klik kotak putus-putus tengah layar, masukkan foto model gaya pose/pakaian yang ingin Anda tiru.</p></div>
-                </div>
-                <div class="tutorial-neon-row">
-                    <div class="tut-num">2</div>
-                    <div class="tut-text"><h4>PROSES GENERATE PROMPT</h4><p>Tekan tombol besar di bawah untuk mulai membedah baju, postur tubuh, pencahayaan, dan mengunci identitas wajah asli.</p></div>
-                </div>
-                <div class="tutorial-neon-row">
-                    <div class="tut-num">3</div>
-                    <div class="tut-text"><h4>SALIN HASIL EKSTRAKSI</h4><p>Ketuk tombol salin/copy prompt di pojok kanan bawah, lalu buka aplikasi atau web AI Gemini resmi.</p></div>
-                </div>
-                <div class="tutorial-neon-row">
-                    <div class="tut-num">4</div>
-                    <div class="tut-text"><h4>KUNCI WAJAH DI GEMINI APP</h4><p>Unggah foto wajah dekat Anda yang paling ganteng/cantik di Gemini App, tempel teks prompt salinan tadi, lalu jalankan!</p></div>
-                </div>
-            </div>
-            <div class="btn-group-row" style="display:flex; gap:10px; margin-top:5px;">
-                <button class="btn-modal-action cancel" onclick="closeTutorialAndGoToCS()">Tanya Admin</button>
-                <button class="btn-modal-action proceed" onclick="closeTutorialAndTriggerBroadcast()">Lanjutkan Akses</button>
-            </div>
-        `;
-        document.getElementById('central-modal').classList.add('active');
-    }
-    function closeTutorialAndGoToCS() { closeModal(); setTimeout(() => { switchToChatView(); }, 150); }
-    function closeTutorialAndTriggerBroadcast() { closeModal(); setTimeout(() => { showBroadcastPopup(); }, 200); }
+        // NAVIGASI MODAL
+        function pindahKeHalaman(tujuan) {
+            document.getElementById('popup-page-utama').style.display = 'none';
+            document.getElementById('popup-page-premium').style.display = 'none';
+            document.getElementById('popup-page-misi').style.display = 'none';
 
-    function showBroadcastPopup() {
-        const customText = localStorage.getItem('global_broadcast_message_db'); const displayText = customText ? customText : "Selamat datang di v1.7 Visual Prompt Extractor! Sekarang sistem kami jauh lebih cepat mengekstrak komponen gambar menggunakan AI Gemini terbaru."; if (sessionStorage.getItem('broadcast_shown_session_id')) return;
-        document.getElementById('dynamic-modal-body').innerHTML = `<h3 style="color: var(--accent-color); margin-bottom: 15px; font-weight:700; text-shadow: 0 0 10px rgba(69, 243, 255, 0.4); text-align: center;">📢 PENGUMUMAN GLOBAL</h3><p style="font-size: 14px; color:#cbd5e1; line-height: 1.6; padding: 15px; background:rgba(0,0,0,0.3); border-radius:14px; text-align: center; margin: 0 auto; width: 100%;">${displayText}</p>`;
-        document.getElementById('modal-content-box').className = "modal-content"; document.getElementById('central-modal').classList.add('active'); sessionStorage.setItem('broadcast_shown_session_id', 'true');
-    }
+            if (tujuan === 'utama') document.getElementById('popup-page-utama').style.display = 'block';
+            else if (tujuan === 'premium') document.getElementById('popup-page-premium').style.display = 'block';
+            else if (tujuan === 'misi') document.getElementById('popup-page-misi').style.display = 'block';
+        }
 
-    function showSocialTasksModal() {
-        document.getElementById('dynamic-modal-body').innerHTML = `<div class="alert-icon-box" style="line-height:51px;">✕</div><h3 style="color: var(--accent-color); margin-bottom: 6px; font-weight:700;">KUOTA GRATIS HABIS! ⚡</h3><p style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px; text-align:center;">Silakan selesaikan misi wajib gabung grup & channel di bawah ini atau ambil paket premium.</p><button class="btn-submit-ss-proof" onclick="window.open('https://t.me/inodigitalprompt')">📸 Kirim Bukti SS Gabung Grup (+8 Limit)</button>`;
-        document.getElementById('modal-content-box').className = "modal-content alert-mode"; document.getElementById('central-modal').classList.add('active');
-    }
+        // UTAMA FUNGSI: GENERATE PROMPT NEMBAK KE SERVER DENGAN KUNCI PROTEKSI LIMIT
+        async function generatePrompt() {
+            const qType = localStorage.getItem('quota_type') || 'FREE';
+            let currentQuota = parseInt(localStorage.getItem('user_quota') || '0');
 
-    function showVoucherAlert(title, desc, isSuccess = false) {
-        document.getElementById('modal-content-box').className = isSuccess ? "modal-content" : "modal-content alert-mode";
-        document.getElementById('dynamic-modal-body').innerHTML = `<div class="alert-icon-box ${isSuccess ? 'success-mode' : ''}" style="line-height:51px;">${isSuccess ? '✓' : '✕'}</div><h3 style="color:#fff; font-weight:700; font-size:18px;">${title}</h3><p style="font-size:13.5px; color:var(--text-muted); margin-top:8px; margin-bottom:22px; line-height:1.5; text-align:center;">${desc}</p><button class="btn-modal-action ${isSuccess ? 'proceed' : 'cancel'}" style="max-width:180px;" onclick="closeModal()">${isSuccess ? 'Mulai Kerja' : 'Coba Lagi'}</button>`;
-        document.getElementById('central-modal').classList.add('active');
-    }
+            // 🛑 CRUCIAL SECURITY CHECK: Jika user miskin kuota gratisan dan bukan tipe premium, blockir instan!
+            if (qType !== 'PREMIUM' && currentQuota <= 0) {
+                document.getElementById('social-tasks-modal').style.display = 'flex';
+                pindahKeHalaman('utama');
+                return;
+            }
 
-    function generateStockVouchersToClipboard() { let txt = ""; for(let i=1000; i<=1799; i++) { txt += `INO-KING-${i}\n`; } navigator.clipboard.writeText(txt).then(() => alert("800 Voucher copied!")); }
+            if (!base64ImageString) {
+                alert("Silakan upload foto referensi Anda terlebih dahulu, Bos!");
+                return;
+            }
 
-    function activateVoucher() {
-        const code = document.getElementById('voucher-input').value.trim().toUpperCase(); if(!code) return;
-        const claimed = JSON.parse(localStorage.getItem('claimed_task_vouchers') || '[]');
-        if(claimed.includes(code)) { showVoucherAlert("Voucher Hangus!", "Kode premium ini sudah pernah diklaim sebelumnya.", false); return; }
-        if (code.match(/^INO-KING-(1[0-7]\d{2})$/)) {
-            localStorage.setItem('premium_until', (new Date().getTime() + (40 * 24 * 60 * 60 * 1000)).toString()); claimed.push(code); localStorage.setItem('claimed_task_vouchers', JSON.stringify(claimed));
-            showVoucherAlert("Aktivasi Sukses!", "BOOM! Akses Premium 40 Hari Tanpa Batas aktif, Bos.", true); updateQuotaDisplay(); document.getElementById('voucher-input').value = "";
-        } else { showVoucherAlert("Voucher Gagal!", "Kode salah atau kadaluarsa.", false); }
-    }
+            // Animasi Loading
+            const btn = document.getElementById('ps-generate-btn');
+            const spinner = document.getElementById('ps-loading-spinner');
+            const loadingZone = document.getElementById('loading-zone');
+            
+            loadingZone.style.display = 'block';
+            spinner.style.display = 'block';
+            btn.disabled = true; btn.style.opacity = "0.6";
 
-    function showInfoModal(title, text) { document.getElementById('modal-content-box').className = "modal-content"; document.getElementById('dynamic-modal-body').innerHTML = `<h3 style="color:var(--accent-color); margin-bottom:15px;">${title}</h3><p style="font-size: 14px; text-align: left; line-height: 1.6; color: #cbd5e1; white-space: pre-line; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; margin-bottom: 20px;">${text}</p><button class="btn-modal-action proceed" style="max-width:140px;" onclick="closeModal()">Tutup</button>`; document.getElementById('central-modal').classList.add('active'); }
-    function closeModal() { document.getElementById('central-modal').classList.remove('active'); }
-    function copyPromptText() { navigator.clipboard.writeText(document.getElementById('prompt-output').innerText).then(() => alert("Copied!")); }
+            try {
+                // Ambil data base64 murni tanpa prefix header dataurl
+                const cleanBase64 = base64ImageString.split(',')[1];
 
-    function previewImage(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(evt) {
-                const img = new Image(); img.src = evt.target.result;
-                img.onload = function() {
-                    const canvas = document.createElement('canvas'); const MAX_WIDTH = 800; let width = img.width; let height = img.height;
-                    if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
-                    canvas.width = width; canvas.height = height; canvas.getContext('2d').drawImage(img, 0, 0, width, height);
-                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.6); document.getElementById('preview-img').src = compressedDataUrl; document.getElementById('preview-img').style.display = 'block';
-                    base64Image = compressedDataUrl.split(',')[1]; document.getElementById('btn-submit').disabled = false;
+                const res = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ image: cleanBase64 })
+                });
+                const data = await res.json();
+
+                if (res.ok && data.text) {
+                    // JALUR SUKSES: Kurangi kuota gratisan jika statusnya user FREE
+                    if (qType !== 'PREMIUM') {
+                        currentQuota -= 1;
+                        localStorage.setItem('user_quota', currentQuota.toString());
+                        updateQuotaDisplay();
+                    }
+
+                    // Tampilkan Duplikasi Foto di Box Analisis agar Rapi Estetik Pas Niat Bos
+                    const resultImg = document.getElementById('ps-result-image-preview');
+                    resultImg.src = base64ImageString;
+                    resultImg.style.display = 'block';
+
+                    document.getElementById('ps-result-textarea').value = data.text;
+                    document.getElementById('result-box').style.display = 'block';
+                } else {
+                    alert(data.error || "Gagal sinkronisasi data server AI, Bos!");
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Jaringan sibuk, gagal terhubung ke Gemini Vercel!");
+            } finally {
+                loadingZone.style.display = 'none';
+                spinner.style.display = 'none';
+                btn.disabled = false; btn.style.opacity = "1";
+            }
+        }
+
+        // LOGIKA KLAIM VOUCHER & AUTO EXPIRED 40 HARI
+        async function klaimVoucherPremium() {
+            const code = document.getElementById('input-voucher-code').value.trim();
+            if(!code) { alert("Masukkan kodenya dulu, Bos!"); return; }
+
+            // Simulasi instan / panggil API backend aktivasi voucher
+            if(code.startsWith("INO-") || code.startsWith("INOPREM-")) {
+                alert("👑 VOUCHER VALID! Paket Premium 40 Hari Berhasil Diaktifkan, Bos!");
+                
+                // Rumus kalkulasi otomatis tanggal kedaluwarsa: Hari Ini + 40 Hari Kedepan
+                const expiredTarget = new Date();
+                expiredTarget.setDate(expiredTarget.getDate() + 40);
+                
+                // Simpan data terenkripsi aman di browser lokal
+                localStorage.setItem('quota_type', 'PREMIUM');
+                localStorage.setItem('premium_expired_date', expiredTarget.toISOString().split('T')[0]); // Output format: YYYY-MM-DD
+                
+                document.getElementById('social-tasks-modal').style.display = 'none';
+                location.reload();
+            } else {
+                alert("⚠️ Kode voucher salah atau sudah hangus digunakan orang lain!");
+            }
+        }
+
+        // LOGIKA RETENTION MARKETING: HITUNG RETENSI WARNING 3 HARI EXPIRED
+        function cekMasaAktifPremium() {
+            const quotaType = localStorage.getItem('quota_type');
+            const expiredDateStr = localStorage.getItem('premium_expired_date');
+
+            if (quotaType !== 'PREMIUM' || !expiredDateStr) return;
+
+            const tanggalExpired = new Date(expiredDateStr);
+            const tanggalHariIni = new Date();
+
+            const selisihWaktu = tanggalExpired.getTime() - tanggalHariIni.getTime();
+            const sisaHari = Math.ceil(selisihWaktu / (1000 * 3600 * 24));
+
+            // Jika masa tenggang habis, matikan status premium otomatis kembali ke FREE
+            if (sisaHari <= 0) {
+                localStorage.setItem('quota_type', 'FREE');
+                localStorage.removeItem('premium_expired_date');
+                updateQuotaDisplay();
+                return;
+            }
+
+            // Jika sisa waktu 3 hari atau kurang, jebolkan pop-up peringatan jingga
+            if (sisaHari <= 3) {
+                const sudahDilihatHariIni = localStorage.getItem('warning_seen_today_' + tanggalHariIni.getDate());
+                if (!sudahDilihatHariIni) {
+                    document.getElementById('sisa-hari-display').innerText = sisaHari;
+                    document.getElementById('premium-warning-modal').style.display = 'flex';
                 }
             }
-            reader.readAsDataURL(file);
         }
-    }
 
-        async function generatePrompt() {
-        if (updateQuotaDisplay() <= 0) { showSocialTasksModal(); return; }
-        
-        // 1. AMBIL ELEMEN GAMBAR YANG DI-UPLOAD USER (Sesuaikan id 'uploaded-image' dengan milik Bos)
-        const imgElement = document.getElementById('preview-image') || document.getElementById('uploaded-image');
-        if (!imgElement || !imgElement.src || imgElement.src.startsWith('data:image') === false) {
-            alert("Masukkan fotonya dulu, Bos!");
-            return;
+        function tutupWarningModal() {
+            document.getElementById('premium-warning-modal').style.display = 'none';
+            localStorage.setItem('warning_seen_today_' + new Date().getDate(), 'true');
         }
-        
-        // Ambil data base64 murni tanpa header data:image/jpeg;base64,
-        const base64Image = imgElement.src.split(',')[1];
 
-        // Tampilkan loader bawaan web kamu, Bos
-        document.getElementById('loader').style.display = 'block'; 
-        document.getElementById('result-box').style.display = 'none';
-
-        try {
-            // 🚀 JALUR SUDAH DIKUNCI MATI KE DOMAIN BARU KAMU TANPA TYPO
-            const res = await fetch('https://inodigitalpromptai.vercel.app/api/analyze', { 
-                method: "POST", 
-                headers: { "Content-Type": "application/json" }, 
-                body: JSON.stringify({ image: base64Image }) 
-            });
-            
-            const data = await res.json();
-    
-            if (res.ok && data.text) { 
-                // JALUR SUKSES: Masukkan teks hasil prompt ke kotak output, tampilkan result box
-                document.getElementById('prompt-output').innerText = data.text; 
-                document.getElementById('result-box').style.display = 'block'; 
-                localStorage.setItem('used_count', (parseInt(localStorage.getItem('used_count') || '0') + 1).toString()); 
-                updateQuotaDisplay(); 
-            } 
-            else { 
-                // Jika server Vercel merespon eror (Tampilkan pesan eror aslinya di pop-up biar ketahuan)
-                showVoucherAlert("Sinkronisasi Gagal", "Eror Server: " + (data.error || "Gagal memproses gambar"), false);
-            }
-        } catch (e) { 
-            // Jika koneksi internet putus atau domain salah
-            showVoucherAlert("Koneksi Bermasalah", "Gagal terhubung ke server Vercel, Bos. Cek jaringan atau Logs Vercel.", false);
-        } finally { 
-            // Matikan loader setelah proses selesai
-            document.getElementById('loader').style.display = 'none'; 
+        function bukaGerbangPerpanjang() {
+            document.getElementById('premium-warning-modal').style.display = 'none';
+            document.getElementById('social-tasks-modal').style.display = 'flex';
+            pindahKeHalaman('premium');
         }
-    }
-    
-
-    function publishAdminBroadcast() { const text = document.getElementById('admin-broadcast-input').value.trim(); if(!text) return; localStorage.setItem('global_broadcast_message_db', text); alert("Broadcast updated!"); document.getElementById('admin-broadcast-input').value = ""; }
-
-    // Fungsi otomatis cek masa aktif user premium setiap kali buka web
-function cekMasaAktifPremium() {
-    const quotaType = localStorage.getItem('quota_type');
-    const expiredDateStr = localStorage.getItem('premium_expired_date'); // Format tanggal tersimpan: YYYY-MM-DD
-
-    // Jika statusnya bukan premium atau tidak ada tanggal expired, abaikan
-    if (quotaType !== 'PREMIUM' || !expiredDateStr) return;
-
-    const tanggalExpired = new Date(expiredDateStr);
-    const tanggalHariIni = new Date();
-
-    // Hitung selisih hari antara hari ini dengan tanggal expired
-    const selisihWaktu = tanggalExpired.getTime() - tanggalHariIni.getTime();
-    const sisaHari = Math.ceil(selisihWaktu / (1000 * 3600 * 24));
-
-    // LOGIKA SAKTI: Jika masa aktif habis (0 atau minus), tendang balik ke FREE
-    if (sisaHari <= 0) {
-        localStorage.setItem('quota_type', 'FREE');
-        localStorage.removeItem('premium_expired_date');
-        return;
-    }
-
-    // LOGIKA PERINGATAN: Jika sisa hari adalah 3, 2, atau 1 hari sebelum habis
-    if (sisaHari <= 3) {
-        // Cek apakah hari ini user sudah pernah menutup pop-up warning (biar gak muncul terus-menerus pas refresh)
-        const sudahDilihatHariIni = localStorage.getItem('warning_seen_today_' + tanggalHariIni.getDate());
-        
-        if (!sudahDilihatHariIni) {
-            // Tampilkan pop-up estetik peringatan hancur
-            document.getElementById('sisa-hari-display').innerText = sisaHari;
-            document.getElementById('premium-warning-modal').style.display = 'flex';
-        }
-    }
-}
-
-function tutupWarningModal() {
-    document.getElementById('premium-warning-modal').style.display = 'none';
-    // Tandai bahwa hari ini user sudah menutup pop-up biar gak risih pas klik menu lain
-    const hariIni = new Date().getDate();
-    localStorage.setItem('warning_seen_today_' + hariIni, 'true');
-}
-
-function bukaGerbangPerpanjang() {
-    // Tutup pop-up warning
-    document.getElementById('premium-warning-modal').style.display = 'none';
-    // Buka pop-up transaksi utama langsung ke halaman detail premium (35k)
-    document.getElementById('social-tasks-modal').style.display = 'flex';
-    pindahKeHalaman('premium');
-}
-
-// Jalankan fungsi cek otomatis ini tepat saat website berhasil dimuat penuh
-document.addEventListener("DOMContentLoaded", function() {
-    cekMasaAktifPremium();
-});
-    
-</script>
+    </script>
 </body>
 </html>

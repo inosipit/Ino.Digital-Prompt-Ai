@@ -1,0 +1,9 @@
+{
+  "name": "ino-digital-prompt-backend",
+  "version": "1.7.0",
+  "description": "Backend pendeteksi komponen gambar untuk Ino.Digital Prompt",
+  "main": "api/analyze.js",
+  "dependencies": {
+    "@google/genai": "^0.1.1"
+  }
+}

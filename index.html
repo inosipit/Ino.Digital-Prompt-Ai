@@ -788,8 +788,14 @@
         if (updateQuotaDisplay() <= 0) { showSocialTasksModal(); return; }
         document.getElementById('loader').style.display = 'block'; document.getElementById('result-box').style.display = 'none';
         try {
-            const res = await fetch('/api/analyze', { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ image: base64Image }) });
+                        // 🚀 LINK SUDAH DITEMBAK MATI LANGSUNG KE SERVER VERCEL (ANTI-MAMPET DI APK)
+            const res = await fetch('https://ino-digital-prompt-ai.vercel.app/api/analyze', { 
+                method: "POST", 
+                headers: { "Content-Type": "application/json" }, 
+                body: JSON.stringify({ image: base64Image }) 
+            });
             const data = await res.json();
+
             if (res.ok) { 
                 document.getElementById('prompt-output').innerText = data.text; 
                 document.getElementById('result-box').style.display = 'block'; 
